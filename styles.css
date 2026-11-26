@@ -1,0 +1,909 @@
+/* ============ TOKENS ============ */
+:root{
+  --dark:#0B2A45;          /* глубокий синий логотипа */
+  --ink:#14304A;
+  --muted:#7C8B99;
+  --line:#DCE7EC;
+  --bg:#FFFFFF;
+  --sand:#E8F1F4;
+  --sand-2:#0B2A45;        /* правая колонка первого экрана — тёмная */
+  --cream:#F2F8FA;
+  --gold:#0E8C93;          /* бирюзовый акцент логотипа */
+  --teal:#0E8C93;          /* тот же бирюзовый, понятным именем */
+  --teal-bright:#13A2A8;   /* активная бирюза: кнопки, наведение */
+  --teal-light:#3AA6A6;
+  --teal-pale:#E3F3F4;     /* бирюзовая подложка под иконки */
+  --wa:#25D366;
+  --container:1180px;
+  --radius:2px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:'Montserrat',-apple-system,'Segoe UI',Arial,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+svg{width:100%;height:100%}
+a{color:inherit;text-decoration:none}
+ul,ol{margin:0;padding:0;list-style:none}
+h1,h2,h3,p{margin:0}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px}
+.muted{color:var(--muted)}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;gap:14px;
+  padding:16px 26px;
+  font-size:12px;font-weight:700;letter-spacing:.09em;
+  border-radius:var(--radius);
+  transition:.25s ease;
+}
+.btn svg{width:18px;height:18px;flex:none}
+/* главная кнопка — бирюзовая, как в макете */
+.btn--dark{background:var(--teal);color:#fff}
+.btn--dark:hover{background:var(--teal-bright);transform:translateY(-2px)}
+/* тёмно-синяя кнопка, если нужна на светлом фоне поверх бирюзы */
+.btn--navy{background:var(--dark);color:#fff}
+.btn--navy:hover{background:var(--teal);transform:translateY(-2px)}
+/* контурная бирюзовая — «смотреть весь каталог» */
+.btn--outline{border:1px solid var(--teal);color:var(--teal);padding:14px 24px}
+.btn--outline:hover{background:var(--teal);color:#fff;transform:translateY(-2px)}
+.btn--block{display:flex;width:100%;justify-content:center;padding:14px;gap:0}
+.btn--ghost{border:1px solid rgba(255,255,255,.55);color:#fff;padding:12px 22px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:none}
+.btn--ghost:hover{background:#fff;color:var(--ink);border-color:#fff}
+
+/* ============ TOPBAR ============ */
+.topbar{border-bottom:1px solid var(--line);background:#fff;position:relative;z-index:30}
+.topbar__inner{
+  display:flex;align-items:center;gap:28px;
+  min-height:84px;
+}
+.logo{display:flex;align-items:center;gap:12px;flex:none}
+.logo__mark{width:40px;height:40px;flex:none}
+.logo__text{display:flex;flex-direction:column;line-height:1}
+.logo__text b{font-size:23px;font-weight:700;letter-spacing:.16em}
+.logo__text i{font-size:9px;font-style:normal;letter-spacing:.22em;color:var(--gold);margin-top:5px}
+
+.topbar__tagline{
+  display:flex;flex-direction:column;gap:2px;
+  padding-left:26px;border-left:1px solid var(--line);
+  font-size:10px;letter-spacing:.06em;line-height:1.45;
+}
+/* первой строкой идёт имя бренда — набираем его крупнее и вразрядку */
+.topbar__tagline strong{font-size:11.5px;font-weight:800;letter-spacing:.14em;color:var(--dark)}
+
+.search{position:relative;flex:1;max-width:270px;margin-left:auto}
+.search input{
+  width:100%;padding:12px 42px 12px 16px;
+  border:1px solid var(--line);border-radius:var(--radius);
+  font:inherit;font-size:13px;color:var(--ink);background:#fff;
+}
+.search input::placeholder{color:#93A5B2}
+.search input:focus{outline:none;border-color:var(--muted)}
+.search button{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:30px;height:30px;padding:6px}
+
+.contact{display:flex;align-items:center;gap:11px;flex:none}
+.contact--wa{margin-left:auto}
+.search + .contact--wa{margin-left:0}
+.contact__icon{width:34px;height:34px;display:grid;place-items:center;flex:none}
+.contact__icon svg{width:24px;height:24px}
+.contact__icon--wa{background:var(--wa);border-radius:50%;padding:6px}
+.contact__text{display:flex;flex-direction:column;line-height:1.35}
+.contact__text .muted{font-size:11px}
+.contact__text strong{font-size:13.5px;font-weight:700;white-space:nowrap}
+.contact:hover .contact__text strong{color:var(--gold)}
+
+.burger{display:none;width:34px;height:26px;flex-direction:column;justify-content:space-between;padding:4px 0}
+.burger span{display:block;height:2px;background:var(--ink);transition:.25s}
+.burger.is-open span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.burger.is-open span:nth-child(2){opacity:0}
+.burger.is-open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+
+/* ============ NAV ============ */
+.nav{background:var(--dark);color:#fff;position:sticky;top:0;z-index:25}
+.nav__inner{display:flex;align-items:center;justify-content:space-between;min-height:54px}
+.nav__list{display:flex;gap:38px}
+.nav__list a{font-size:11.5px;font-weight:600;letter-spacing:.09em;color:#EAF0F4;transition:.2s}
+.nav__list a:hover{color:var(--gold)}
+.nav__badge{font-size:11.5px;font-weight:700;letter-spacing:.09em;color:var(--gold)}
+
+/* ============ HERO ============ */
+/* баннер: наш цех размытым фоном, поверх — светлая вуаль под текст */
+.hero{
+  position:relative;overflow:hidden;
+  background:linear-gradient(105deg,#F7FAFB 0%,#EFF6F8 55%,#E7F1F4 100%);
+}
+.hero__grid{
+  position:relative;z-index:2;
+  max-width:1440px;margin:0 auto;
+  display:grid;grid-template-columns:1fr .74fr;
+  align-items:center;min-height:640px;
+}
+.hero__left{padding:64px 40px 64px 58px}
+.hero__eyebrow{
+  font-size:13px;font-weight:800;letter-spacing:.30em;color:var(--teal);
+}
+.hero__title{
+  margin-top:20px;
+  font-size:52px;font-weight:800;letter-spacing:.005em;line-height:1.14;
+}
+.hero__sub{margin-top:22px;max-width:440px;font-size:17px;line-height:1.7;color:#33495D}
+.hero__cats{
+  margin-top:14px;
+  font-size:12.5px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:#5A6C7B;
+}
+.hero__cats i,.hero__made i{font-style:normal;color:var(--teal);padding:0 6px}
+.hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 26px;margin-top:38px}
+.hero__link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink);
+  border-bottom:1px solid var(--line);padding-bottom:3px;transition:.2s;
+}
+.hero__link svg{width:17px;height:17px}
+.hero__link:hover{color:var(--teal);border-color:var(--teal)}
+.hero__made{margin-top:30px;font-size:12.5px;line-height:1.7;color:var(--muted)}
+
+/* фотография из каталога: кадр во всю высоту первого экрана */
+.hero__media{align-self:stretch;position:relative;overflow:hidden;background:var(--cream)}
+.hero__media picture{display:contents}
+.hero__photo{
+  position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;object-position:50% 34%;
+}
+
+/* ============ СТРАНИЦА «О НАС» ============ */
+.nav__list a.is-current{color:var(--gold)}
+
+.page-hero{background:linear-gradient(160deg,#F8FAFB 25%,#E9F0F3);overflow:hidden}
+.page-hero__grid{
+  max-width:1440px;margin:0 auto;
+  display:grid;grid-template-columns:1fr .62fr;align-items:center;
+  min-height:480px;
+}
+.page-hero__text{padding:64px 60px}
+.page-hero__eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#0E8C93;
+}
+.page-hero__title{
+  margin-top:20px;font-size:40px;font-weight:800;line-height:1.2;letter-spacing:.005em;
+}
+.page-hero__lead{
+  margin-top:26px;max-width:620px;
+  font-size:16px;line-height:1.85;color:#33495D;
+}
+.page-hero__media{align-self:stretch;position:relative;min-height:420px;overflow:hidden}
+.page-hero__media img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%;
+}
+.page-hero__media::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:110px;z-index:2;pointer-events:none;
+  background:linear-gradient(90deg,#F4F8F9 10%,rgba(244,248,249,0));
+}
+
+/* цифры */
+.facts{background:var(--sand);padding:34px 0}
+.facts__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.fact{position:relative;padding:0 20px;text-align:center}
+.fact + .fact::before{
+  content:"";position:absolute;left:0;top:2px;bottom:2px;width:1px;background:#B7CBD8;
+}
+.fact__value{display:block;font-size:23px;font-weight:700;letter-spacing:.01em;line-height:1.25}
+.fact__label{display:block;margin-top:7px;font-size:11.5px;line-height:1.6;color:#5A6C7B}
+
+/* текст */
+.story{padding:46px 0 44px}
+.story__grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.story__col p{font-size:15px;line-height:1.85;color:#33495D}
+.story__accent{
+  padding-left:22px;border-left:2px solid #0E8C93;
+  font-size:16px !important;font-weight:600;line-height:1.7 !important;color:var(--ink) !important;
+}
+
+/* почему выбирают нас */
+
+/* цех */
+.workshop{position:relative;min-height:300px;display:flex;align-items:center;overflow:hidden}
+.workshop__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.workshop::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,20,40,.92) 30%,rgba(0,20,40,.55))}
+.workshop__body{position:relative;z-index:2;color:#fff}
+.workshop__body h2{font-size:24px;font-weight:800;letter-spacing:.045em}
+.workshop__body p{margin-top:16px;font-size:14.5px;line-height:1.75;color:#C8D6DF}
+
+/* призыв */
+.btn--wa{background:var(--wa);color:#fff}
+.btn--wa svg{width:17px;height:17px}
+.btn--wa:hover{filter:brightness(1.08);transform:translateY(-2px)}
+
+@media (max-width:960px){
+  .page-hero__grid{grid-template-columns:1fr;min-height:0}
+  .page-hero__text{padding:44px 24px 36px}
+  .page-hero__title{font-size:31px}
+  .page-hero__media{min-height:360px}
+  .page-hero__media::before{display:none}
+  .facts__grid{grid-template-columns:1fr 1fr;gap:26px 0}
+  .story{padding:48px 0 42px}
+  .story__grid{grid-template-columns:1fr;gap:26px}
+  .workshop__body h2{font-size:20px}
+}
+
+@media (max-width:620px){
+  .page-hero__title{font-size:26px}
+  .page-hero__lead{font-size:15px}
+  .facts__grid{grid-template-columns:1fr;gap:22px}
+  .fact{padding:0}
+  .fact + .fact::before{display:none}
+  .story__accent{font-size:16.5px !important;padding-left:18px}
+}
+
+/* ============ SECTION HEAD ============ */
+.catalog{padding:64px 0 56px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px}
+.section-title{font-size:26px;font-weight:800;letter-spacing:.05em}
+.link-arrow{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:11px 20px;border:1px solid #BFE0E2;border-radius:var(--radius);
+  font-size:13px;color:var(--teal);transition:.2s;
+}
+.link-arrow svg{width:18px;height:18px}
+.link-arrow:hover{background:var(--teal);border-color:var(--teal);color:#fff;gap:16px}
+
+/* ============ FILTERS ============ */
+.catalog__layout{display:grid;grid-template-columns:196px 1fr;gap:26px;align-items:start}
+.cats__btn{
+  display:block;width:100%;text-align:left;
+  padding:13px 16px;font-size:11.5px;font-weight:600;letter-spacing:.07em;
+  color:#294055;border-bottom:1px solid transparent;transition:.2s;
+}
+.cats li + li .cats__btn{border-top:1px solid var(--line)}
+.cats__btn:hover{background:var(--cream);color:var(--gold)}
+.cats__btn.is-active{background:var(--teal);color:#fff}
+
+.sizes{margin-top:26px;background:var(--sand);padding:20px 18px}
+.sizes__title{font-size:11.5px;font-weight:700;letter-spacing:.08em;margin-bottom:16px}
+.sizes__grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px;margin-bottom:20px}
+.check{display:flex;align-items:center;gap:9px;font-size:12.5px;cursor:pointer;user-select:none}
+.check input{
+  appearance:none;width:15px;height:15px;flex:none;
+  border:1px solid #B4C4CE;background:#fff;border-radius:1px;transition:.15s;
+}
+.check input:checked{background:var(--teal);border-color:var(--teal);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5'%3E%3Cpath d='m5 12 5 5L19 7'/%3E%3C/svg%3E");
+  background-size:11px;background-repeat:no-repeat;background-position:center}
+
+/* ============ PRODUCTS ============ */
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 20px}
+.product{position:relative;animation:fade .35s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.product__media{
+  display:block;width:100%;padding:0;
+  position:relative;aspect-ratio:7/8;overflow:hidden;background:var(--cream);
+  cursor:zoom-in;
+}
+.product__media img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.product:hover .product__media img{transform:scale(1.05)}
+.product__count{
+  position:absolute;left:12px;bottom:12px;
+  padding:5px 9px;border-radius:2px;
+  background:rgba(255,255,255,.92);
+  font-size:10px;font-weight:600;letter-spacing:.05em;color:var(--ink);
+}
+.product__zoom{
+  position:absolute;right:12px;bottom:12px;
+  width:32px;height:32px;display:grid;place-items:center;border-radius:50%;
+  background:rgba(255,255,255,.92);
+  opacity:0;transform:translateY(6px);transition:.25s ease;
+}
+.product__zoom svg{width:16px;height:16px}
+.product:hover .product__zoom{opacity:1;transform:none}
+.fav{
+  position:absolute;top:12px;right:12px;width:30px;height:30px;
+  display:grid;place-items:center;border-radius:50%;
+  background:rgba(255,255,255,.9);transition:.2s;
+}
+.fav svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:1.7}
+.fav:hover{transform:scale(1.12)}
+.fav.is-active svg{fill:#D14343;stroke:#D14343}
+.product__name{margin-top:14px;font-size:13.5px;font-weight:600}
+.product__price{margin-top:8px;font-size:15px;font-weight:700}
+.products__empty{margin-top:40px;text-align:center;color:var(--muted);font-size:14px}
+
+/* ---- выбор цвета ---- */
+.swatches{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.swatch{
+  width:19px;height:19px;border-radius:50%;flex:none;
+  background:var(--c);border:1px solid rgba(0,0,0,.14);
+  outline:1px solid transparent;outline-offset:2px;transition:.18s;
+}
+.swatch:hover{transform:scale(1.12)}
+.swatch.is-active{outline-color:var(--ink)}
+.lb__colors{margin-top:14px}
+.lb__swatches{display:flex;flex-wrap:wrap;gap:9px}
+.lb__swatches .swatch{width:22px;height:22px;border-color:rgba(255,255,255,.35)}
+.lb__swatches .swatch.is-active{outline-color:#fff}
+
+/* ============ B2B-БАННЕР ============
+   Компактная полоса на фото цеха: второй сценарий сайта, но заметно
+   тише каталога — одна строка описания и одна кнопка. */
+.b2bbar{position:relative;overflow:hidden;min-height:280px;display:flex;align-items:center}
+.b2bbar__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.b2bbar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,20,40,.92) 40%,rgba(0,20,40,.55))}
+.b2bbar__body{
+  position:relative;z-index:2;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;
+  padding-top:44px;padding-bottom:44px;
+}
+.b2bbar__title{font-size:22px;font-weight:800;letter-spacing:.04em;line-height:1.3;max-width:620px}
+.b2bbar__text{margin-top:12px;font-size:13.5px;line-height:1.65;color:#C8D6DF}
+.b2bbar__cta{flex:none}
+
+/* --- страница «О нас»: строка под лидом первого экрана --- */
+.page-hero__tags{margin-top:18px;font-size:13px;line-height:1.8;color:#5A6C7B}
+.page-hero__tags i{font-style:normal;color:var(--teal);padding:0 6px}
+.story__title{margin-bottom:22px}
+
+/* --- два направления компании: бренд и производство на заказ --- */
+.ways{padding:48px 0 52px;background:var(--cream)}
+.ways__grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.way{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line)}
+.way__media{aspect-ratio:16/9;overflow:hidden;background:var(--cream)}
+.way__media img{width:100%;height:100%;object-fit:cover;object-position:50% 22%}
+/* вертикальный кадр каталога в широкой рамке — держим лицо модели в кадре */
+.way__media--top img{object-position:50% 6%}
+.way__body{padding:24px 26px 28px;display:flex;flex-direction:column;flex:1}
+.way__eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);
+}
+.way__title{margin-top:12px;font-size:22px;font-weight:800;letter-spacing:.02em;line-height:1.25}
+.way__text{margin-top:14px;font-size:14px;line-height:1.8;color:#41576B}
+.way__cta{margin-top:auto;align-self:flex-start;margin-top:24px}
+
+/* --- география: спокойная строка без карт и инфографики --- */
+.geo{padding:30px 0 34px}
+.geo__inner{max-width:760px}
+.geo__title{font-size:20px;font-weight:800;letter-spacing:.01em;line-height:1.3}
+.geo__text{margin-top:12px;font-size:14.5px;line-height:1.8;color:#33495D}
+.geo__list{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+  font-size:13px;font-weight:600;letter-spacing:.06em;color:#5A6C7B;
+}
+.geo__list i{font-style:normal;color:var(--teal);padding:0 8px}
+
+
+/* адаптив блоков страницы «О нас» — правила ниже базовых, иначе не сработают */
+@media (max-width:960px){
+  /* на планшете карточки идут в столбик, но внутри разворачиваются в строку:
+     фото слева, текст справа — иначе блок вырастает вдвое */
+  .ways__grid{grid-template-columns:1fr}
+  .way{flex-direction:row}
+  /* без заданной пропорции высоту диктует сам снимок: вертикальный кадр
+     вытягивал карточку бренда вдвое выше соседней */
+  .way__media{flex:0 0 38%;aspect-ratio:4/3}
+  .way__body{flex:1;min-width:0}
+}
+@media (max-width:620px){
+  /* на телефоне строка уже не помещается — возвращаем фото наверх */
+  .way{flex-direction:column}
+  .way__media{flex:none;aspect-ratio:16/10}
+  .ways{padding:38px 0 42px}
+  .way__body{padding:20px 18px 24px}
+  .way__title{font-size:19px}
+  .geo{padding:28px 0 32px}
+  .geo__title{font-size:19px}
+}
+
+/* ============ FOOTER ============ */
+.footer{background:var(--cream);padding:44px 0 0;border-top:1px solid var(--line)}
+/* три колонки: о компании — контакты — социальные сети */
+.footer__grid{display:grid;grid-template-columns:1.5fr 1.1fr .9fr;gap:40px}
+.logo--footer{margin-bottom:18px}
+.footer__about{font-size:12px;line-height:1.8;color:#5A6C7B}
+.footer__head{font-size:12px;font-weight:700;letter-spacing:.08em;margin-bottom:18px}
+.footer__list li{font-size:12.5px;line-height:1.6;margin-bottom:9px;color:#41576B}
+.footer__list a{transition:.2s}
+.footer__list a:hover{color:var(--gold)}
+.footer__list--contacts a{display:inline-flex;align-items:center;gap:9px}
+.footer__list--contacts svg{width:15px;height:15px;flex:none;color:var(--muted)}
+.footer__addr{margin-bottom:14px !important;line-height:1.7}
+.socials{display:flex;gap:10px}
+.socials a{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);background:#fff;border-radius:50%;transition:.2s}
+.socials a svg{width:18px;height:18px}
+.socials a:hover{border-color:var(--gold);transform:translateY(-2px)}
+.footer__bottom{
+  margin-top:38px;padding-top:18px;padding-bottom:18px;
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:16px;
+  font-size:11px;color:var(--muted);
+}
+
+/* ============ ПРОСМОТР ФОТО ============ */
+.lb{
+  position:fixed;inset:0;z-index:100;
+  display:grid;grid-template-columns:64px 1fr 64px;align-items:center;
+  padding:36px 20px 64px;
+}
+.lb[hidden]{display:none}
+.lb__backdrop{position:absolute;inset:0;background:rgba(6,22,37,.94);animation:lbFade .25s ease}
+@keyframes lbFade{from{opacity:0}to{opacity:1}}
+
+.lb__stage{
+  position:relative;z-index:2;margin:0;
+  display:flex;align-items:flex-start;gap:30px;justify-content:center;
+  max-height:100%;animation:lbIn .28s cubic-bezier(.2,.7,.3,1) both;
+}
+@keyframes lbIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.lb__img{
+  max-height:calc(100vh - 130px);max-width:min(560px,60vw);
+  width:auto;object-fit:contain;background:#EDF2F4;
+}
+.lb__info{
+  align-self:center;color:#EDF3F6;max-width:230px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.lb__name{font-size:18px;font-weight:600}
+.lb__meta{font-size:12.5px;line-height:1.7;color:#9DB0BD}
+.lb__price{margin-top:6px;font-size:20px;font-weight:700}
+.lb__order{
+  margin-top:16px;display:inline-flex;align-items:center;gap:10px;align-self:flex-start;
+  padding:13px 20px;background:var(--wa);color:#fff;border-radius:2px;
+  font-size:12px;font-weight:700;letter-spacing:.05em;transition:.2s;
+}
+.lb__order svg{width:16px;height:16px}
+.lb__order:hover{filter:brightness(1.08);gap:14px}
+
+.lb__close{
+  position:absolute;top:20px;right:24px;z-index:3;
+  width:42px;height:42px;padding:10px;border-radius:50%;color:#fff;
+  background:rgba(255,255,255,.1);transition:.2s;
+}
+.lb__close:hover{background:rgba(255,255,255,.22);transform:rotate(90deg)}
+
+.lb__nav{
+  position:relative;z-index:3;justify-self:center;
+  width:48px;height:48px;padding:12px;border-radius:50%;color:#fff;
+  background:rgba(255,255,255,.1);transition:.2s;
+}
+.lb__nav:hover{background:rgba(255,255,255,.22)}
+.lb__nav[hidden]{visibility:hidden;display:block}
+
+/* лента миниатюр под фото */
+.lb__dots{
+  position:absolute;left:0;right:0;bottom:14px;z-index:3;
+  display:flex;justify-content:center;gap:8px;
+  padding:0 24px;overflow-x:auto;scrollbar-width:none;
+}
+.lb__dots::-webkit-scrollbar{display:none}
+.lb__dots button{
+  flex:none;width:40px;height:46px;padding:0;overflow:hidden;border-radius:2px;
+  opacity:.45;outline:2px solid transparent;outline-offset:2px;transition:.2s;
+}
+.lb__dots button img{width:100%;height:100%;object-fit:cover}
+.lb__dots button:hover{opacity:.8}
+.lb__dots button.is-active{opacity:1;outline-color:#fff}
+
+@media (max-width:760px){
+  .lb{grid-template-columns:1fr;padding:56px 16px 76px}
+  .lb__stage{flex-direction:column;align-items:center;gap:16px}
+  .lb__img{max-width:100%;max-height:60vh}
+  .lb__info{max-width:none;text-align:center;align-items:center}
+  .lb__order{align-self:center}
+  .lb__nav{position:absolute;top:50%;margin-top:-24px}
+  .lb__nav--prev{left:12px}
+  .lb__nav--next{right:12px}
+}
+
+/* ============ FAB ============ */
+.fab{
+  position:fixed;right:16px;bottom:16px;z-index:40;
+  width:48px;height:48px;border-radius:50%;background:var(--wa);
+  display:none;place-items:center;padding:11px;
+  box-shadow:0 6px 18px rgba(37,211,102,.32);
+  opacity:.55;transition:opacity .25s ease, transform .25s ease;
+}
+.fab svg{width:100%;height:100%}
+.fab:hover,.fab:focus-visible{opacity:1;transform:scale(1.06)}
+/* пока страницу листают — кнопка почти прозрачная и не мешает читать */
+.fab.is-idle{opacity:1}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1180px){
+  .hero__grid{grid-template-columns:1fr .8fr;min-height:520px}
+  .hero__left{padding:52px 28px}
+  .hero__title{font-size:38px}
+  .hero__sub{font-size:15.5px}
+  .products{grid-template-columns:repeat(3,1fr)}
+}
+
+@media (max-width:960px){
+  .topbar__inner{flex-wrap:wrap;gap:16px;padding-top:14px;padding-bottom:14px}
+  .topbar__tagline{display:none}
+  .search{order:5;max-width:none;flex:1 1 100%;margin-left:0}
+  /* на узких экранах вправо уходит бургер, WhatsApp встаёт сразу за логотипом */
+  .contact--wa{margin-left:0}
+  .burger{display:flex;margin-left:auto}
+  .nav__inner{flex-direction:column;align-items:stretch;padding-top:0}
+  .nav__list{display:none;flex-direction:column;gap:0}
+  .nav.is-open .nav__list{display:flex}
+  .nav__list li{border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav__list a{display:block;padding:14px 0}
+  .nav__badge{padding:14px 0}
+  .nav:not(.is-open) .nav__badge{padding:16px 0}
+  .hero__grid{grid-template-columns:1fr .86fr;min-height:460px}
+  .hero__left{padding:44px 22px}
+  .hero__title{font-size:33px}
+  .catalog__layout{grid-template-columns:1fr}
+  .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .cats li + li .cats__btn{border-top:0}
+  .cats__btn{background:#fff;text-align:center}
+  .sizes{margin-top:16px}
+  .sizes__grid{grid-template-columns:repeat(4,1fr)}
+  .footer__grid{grid-template-columns:1fr 1fr}
+  .fab{display:grid}
+  .footer__bottom{padding-bottom:74px}   /* чтобы кнопка WhatsApp не закрывала последнюю строку */
+}
+
+@media (max-width:620px){
+  .topbar__inner{gap:14px;min-height:0}
+  .logo__mark{width:34px;height:34px}
+  .logo__text b{font-size:20px}
+  .contact--wa .contact__text{display:none}     /* остаётся только зелёный значок */
+  .contact--wa{order:2;margin-left:auto}
+  .burger{order:3;margin-left:0}
+  .search{order:9;flex:1 0 100%;min-width:0;max-width:none;margin:0}
+  /* на телефоне сначала фотография, под ней текст и кнопки */
+  .hero__grid{grid-template-columns:1fr;min-height:0}
+  .hero__media{order:-1;height:340px}
+  .hero__left{padding:30px 20px 34px}
+  .hero__title{font-size:28px}
+  .hero__sub{font-size:14.5px}
+  .hero__actions{margin-top:26px;gap:10px 20px}
+  .hero__actions .btn{flex:1 1 auto;justify-content:center}
+  .products{grid-template-columns:1fr 1fr;gap:18px 14px}
+  .section-title{font-size:21px}
+  .link-arrow{font-size:12px}
+  .b2bbar{min-height:0}
+  .b2bbar__body{flex-direction:column;align-items:flex-start;gap:20px;padding-top:32px;padding-bottom:32px}
+  .b2bbar__title{font-size:18px}
+  .b2bbar__cta{width:100%;justify-content:center}
+  .footer__grid{grid-template-columns:1fr}
+  .footer__bottom{flex-direction:column;text-align:center}
+}
+
+/* ============================================================
+   B2B ПРОИЗВОДСТВО (b2b.html)
+   Отдельных токенов и шрифтов не вводим — всё на существующих
+   переменных, кнопках и сетках сайта.
+   ============================================================ */
+
+
+/* --- первый экран: две кнопки под лидом --- */
+.page-hero__actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.page-hero__tags{
+  margin-top:18px;font-size:13.5px;line-height:1.9;color:#41576B;
+}
+.page-hero__tags i{font-style:normal;color:var(--teal);padding:0 6px}
+
+
+/* --- что мы производим --- */
+.dirs{padding:62px 0 66px}
+.dirs__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px 22px;margin-top:34px}
+.dir{
+  position:relative;display:flex;flex-direction:column;
+  background:#fff;border:1px solid var(--line);
+  transition:border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+/* ссылка внизу карточки, но кликается вся карточка: ::after растянут по ней */
+.dir__link{
+  margin-top:auto;padding-top:14px;
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--teal);
+  transition:gap .25s ease;
+}
+.dir__link svg{width:15px;height:15px;flex:none}
+.dir__link::after{content:"";position:absolute;inset:0}
+@media (hover:hover){
+  .dir:hover{border-color:#BBD7DE;box-shadow:0 10px 24px rgba(11,42,69,.09);transform:translateY(-3px)}
+  .dir:hover .dir__link{gap:13px}
+}
+/* клавиатура: рамка обводит всю карточку, а не только текст ссылки */
+.dir__link:focus-visible{outline:none}
+.dir__link:focus-visible::after{outline:2px solid var(--teal);outline-offset:3px}
+.dir__media{aspect-ratio:4/3;overflow:hidden;background:var(--cream)}
+.dir__media img{width:100%;height:100%;object-fit:cover}
+.dir__body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.dir h3{font-size:14px;font-weight:700;letter-spacing:.03em;line-height:1.5}
+.dir p{font-size:12.5px;line-height:1.75;color:#41576B}
+
+/* --- для кого мы производим (сетка как в «почему выбирают нас») --- */
+
+/* --- производство полного цикла / как мы работаем --- */
+/* --- реализованные проекты --- */
+.cases{padding:60px 0 66px}
+.cases__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:34px}
+.case{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line)}
+.case__media{aspect-ratio:4/3;overflow:hidden;background:var(--cream)}
+.case__body{padding:22px 22px 24px}
+.case h3{font-size:14.5px;font-weight:700;letter-spacing:.03em}
+.case__rows{margin-top:14px}
+.case__row{
+  display:flex;gap:12px;padding:9px 0;
+  border-top:1px solid var(--line);font-size:12.5px;line-height:1.65;
+}
+.case__key{flex:none;width:74px;color:var(--muted)}
+.case__todo{color:var(--teal);font-weight:600}
+
+/* --- реальный кейс: галерея работ + описание --- */
+.case-main{
+  display:grid;grid-template-columns:1.32fr .8fr;gap:30px;align-items:stretch;
+  margin-top:26px;padding:26px;
+  background:#fff;border:1px solid var(--line);
+}
+.case-main__gallery{display:flex;flex-direction:column;gap:12px;min-width:0}
+.case-shot{
+  display:block;width:100%;padding:0;overflow:hidden;
+  background:var(--cream);border:1px solid var(--line);cursor:zoom-in;
+}
+.case-shot img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.case-shot:hover img{transform:scale(1.035)}
+.case-shot:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.case-shot--lead{aspect-ratio:3/2}
+.case-main__row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.case-main__row .case-shot{aspect-ratio:4/3}
+/* второй ряд кейса: снимки заказчика показываем целиком, не обрезая —
+   кадр вписывается в ячейку, свободное место добирается фоном */
+.case-main__row--free{margin-top:2px}
+.case-shot--free img{object-fit:contain;background:var(--cream)}
+.case-shot--free:hover img{transform:none}
+
+.case-main__body{min-width:0;display:flex;flex-direction:column}
+.case-main__kicker{
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);
+}
+.case-main__title{margin-top:12px;font-size:19px;font-weight:700;line-height:1.45}
+.case-main__body .case__rows{margin-top:20px}
+.case-main__body .case__row{font-size:13px;padding:12px 0}
+.case-main__body .case__key{flex:0 0 108px;width:auto;padding-right:12px}
+.case-main__step{
+  margin-top:22px;font-size:11px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+}
+.case-main__body .case__flow{margin:8px 0 24px;padding-top:0;border-top:0;font-size:12px}
+.case-main__cta{margin-top:auto;align-self:flex-start}
+.cases__note{margin-top:20px;font-size:12.5px;line-height:1.75;color:var(--muted)}
+.cases__lead{margin-top:14px;max-width:640px;font-size:14px;line-height:1.8;color:#41576B}
+
+/* --- производство для брендов: компактный подраздел внутри «Реализованных проектов» --- */
+.brands{margin-top:46px;padding-top:42px;border-top:1px solid var(--line)}
+.brands__title{font-size:22px;font-weight:800;letter-spacing:.05em}
+.brands__lead{margin-top:12px;max-width:720px;font-size:14px;line-height:1.8;color:#41576B}
+.brands__lead + .brands__lead{margin-top:8px}
+.brands__grid{display:grid;gap:22px;margin-top:30px}
+
+/* каждый бренд — блок во всю ширину: описание проекта, под ним все его фотографии */
+.brand{background:#fff;border:1px solid var(--line);padding:22px 22px 24px}
+.brand__head{max-width:760px}
+.brand__kicker{
+  font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);
+}
+.brand__title{margin-top:10px;font-size:16px;font-weight:700;line-height:1.45}
+.brand__rows{margin-top:16px}
+.brand__row{
+  display:flex;gap:10px;padding:9px 0;
+  border-top:1px solid var(--line);font-size:12.5px;line-height:1.65;
+}
+.brand__key{flex:0 0 62px;color:var(--muted)}
+.brand__flow{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+  font-size:11.5px;line-height:1.7;color:#5A6C7B;
+}
+.brand__flow i{font-style:normal;color:var(--teal);padding:0 3px}
+.brand__ext{
+  margin-top:16px;align-self:flex-start;
+  font-size:11.5px;font-weight:600;color:var(--muted);
+  border-bottom:1px solid var(--line);transition:.2s;
+}
+.brand__ext:hover{color:var(--teal);border-color:var(--teal)}
+
+/* --- галерея бренда: превью всех фотографий, крупный вид по клику --- */
+.brand__grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:20px}
+.brand__shot{
+  display:block;width:100%;padding:0;overflow:hidden;aspect-ratio:3/4;
+  background:var(--cream);border:1px solid var(--line);cursor:zoom-in;
+}
+.brand__shot img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.brand__shot:hover img{transform:scale(1.04)}
+.brand__shot:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+/* первый кадр крупнее — иначе сетка из полусотни превью читается как контактный лист */
+.brand__grid > .brand__shot:first-child{grid-column:span 2;grid-row:span 2}
+/* свёрнутая галерея обрывается ровно по границе ряда: на компьютере 4 ряда,
+   на планшете и телефоне — меньше, чтобы блок не растягивался на весь экран */
+.brand:not(.is-open) .brand__grid > .brand__shot:nth-child(n+22){display:none}
+
+.brand__more{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;margin-top:10px;padding:12px;
+  background:var(--cream);border:1px solid var(--line);cursor:pointer;
+  font:inherit;font-size:12.5px;font-weight:600;letter-spacing:.02em;color:var(--ink);
+  transition:.2s;
+}
+/* display:flex сильнее правила браузера для [hidden] — гасим кнопку явно,
+   иначе у бренда с небольшим числом фото она видна, хотя прятать нечего */
+.brand__more[hidden]{display:none}
+.brand__more:hover{border-color:var(--teal);color:var(--teal)}
+.brand__more:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.brand__more svg{width:15px;height:15px;flex:none;transition:transform .25s ease}
+.brand.is-open .brand__more svg{transform:rotate(180deg)}
+
+.brands__cta{
+  display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;
+  margin-top:26px;padding:24px 26px;background:var(--cream);border:1px solid var(--line);
+}
+.brands__cta-title{font-size:15px;font-weight:700;letter-spacing:.02em}
+.brands__cta-text{margin-top:7px;max-width:560px;font-size:12.5px;line-height:1.75;color:#41576B}
+.brands__cta-btn{flex:none}
+
+/* якорные переходы: заголовок не должен уезжать под липкое меню */
+#case-kulikov,#case-knauf,#brand-production,#cases,#directions,#quote{scroll-margin-top:88px}
+.case-main + .case-main{margin-top:26px}
+
+/* --- просмотр фото кейса: тот же оверлей, но без карточки товара --- */
+.lb--plain .lb__stage{flex-direction:column;align-items:center;gap:14px}
+.lb--plain .lb__img{max-width:min(1100px,86vw);max-height:calc(100vh - 170px)}
+.lb__caption{
+  color:#B9C9D4;font-size:12.5px;line-height:1.6;text-align:center;max-width:640px;
+}
+
+/* --- доверие к производству: галерея под будущие фото --- */
+/* --- производство в работе: один реальный кадр во всю ширину --- */
+.inwork{padding:52px 0 58px}
+.inwork__lead{margin-top:18px;max-width:720px;font-size:14px;line-height:1.8;color:#41576B}
+/* два кадра рядом, на телефоне — друг под другом, иначе каждый ужимается в марку */
+.inwork__shots{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+.inwork__shot{border:1px solid var(--line);background:var(--cream);line-height:0;aspect-ratio:4/3;overflow:hidden}
+.inwork__shot img{display:block;width:100%;height:100%;object-fit:cover}
+@media (max-width:620px){
+  .inwork{padding:38px 0 42px}
+  .inwork__lead{font-size:13.5px}
+  .inwork__shots{grid-template-columns:1fr;gap:10px;margin-top:20px}
+}
+
+/* --- форма заявки --- */
+.quote{background:var(--sand-2);color:#fff;padding:58px 0 64px}
+.quote__grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:start}
+.quote__title{font-size:25px;font-weight:800;letter-spacing:.01em;line-height:1.3}
+.quote__text{margin-top:16px;font-size:14.5px;line-height:1.8;color:#C2D2DD}
+.quote__wa{margin-top:26px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.quote__or{font-size:12.5px;color:#9DB4C4}
+
+.form__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field--full{grid-column:1/-1}
+.field label{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9DB4C4}
+.field input,.field textarea{
+  width:100%;padding:12px 14px;
+  font:inherit;font-size:13.5px;color:#fff;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.18);border-radius:var(--radius);
+  transition:.2s;
+}
+.field textarea{resize:vertical;min-height:92px}
+.field input::placeholder,.field textarea::placeholder{color:#7E96A8}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--teal-light);background:rgba(255,255,255,.11)}
+.field input[type=file]{padding:10px 12px;font-size:12px;color:#C2D2DD}
+.field input[type=file]::file-selector-button{
+  margin-right:12px;padding:7px 13px;
+  font:inherit;font-size:11.5px;font-weight:600;color:#fff;cursor:pointer;
+  background:var(--teal);border:0;border-radius:var(--radius);
+}
+.form__note{margin-top:6px;font-size:11.5px;line-height:1.7;color:#8FA8B9}
+.field__hint{font-size:11px;line-height:1.6;color:#8FA8B9}
+.form__actions{margin-top:20px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.form__status{font-size:12.5px;line-height:1.6;color:#7FD4D4}
+.form__status:empty{display:none}
+
+/* сноска под блоком характеристик */
+.facts__note{
+  margin-top:26px;padding-top:18px;border-top:1px solid #C4D8E2;
+  text-align:center;font-size:12.5px;line-height:1.7;color:#5A6C7B;
+}
+
+/* --- с чем можно прийти --- */
+.offer{padding:46px 0 50px}
+.offer__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+/* компактный пункт: иконка слева, заголовок и одна строка справа */
+.pick{display:flex;gap:14px;padding:16px 18px;background:#fff;border:1px solid var(--line)}
+.pick svg{width:26px;height:26px;flex:none;margin-top:1px}
+.pick h3{font-size:13px;font-weight:700;line-height:1.45;letter-spacing:.02em}
+.pick p{margin-top:5px;font-size:12px;line-height:1.6;color:#41576B}
+
+/* --- строка процесса в карточке кейса --- */
+.case__flow{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+  font-size:11.5px;line-height:1.7;color:#5A6C7B;
+}
+.case__flow i{font-style:normal;color:var(--teal);padding:0 3px}
+
+/* --- частые вопросы (нативный details, без библиотек) --- */
+.faq{background:var(--cream);padding:60px 0 66px}
+.faq__list{margin-top:32px;max-width:920px}
+.faq__item{background:#fff;border:1px solid var(--line);margin-bottom:10px}
+.faq__item summary{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:18px 22px;cursor:pointer;list-style:none;
+  font-size:14px;font-weight:600;line-height:1.55;transition:.2s;
+}
+.faq__item summary::-webkit-details-marker{display:none}
+.faq__item summary:hover{color:var(--teal)}
+.faq__chev{width:16px;height:16px;flex:none;color:var(--teal);transition:transform .22s ease}
+.faq__item[open] summary{color:var(--teal)}
+.faq__item[open] .faq__chev{transform:rotate(180deg)}
+.faq__body{padding:0 22px 20px;max-width:760px;font-size:13.5px;line-height:1.85;color:#41576B}
+
+/* пояснение под кнопкой формы */
+.form__after{margin-top:16px;font-size:12.5px;line-height:1.75;color:#9DB4C4}
+
+/* --- адаптив B2B: продолжаем те же брейкпоинты, что на сайте --- */
+@media (max-width:1180px){
+  .dirs__grid{grid-template-columns:repeat(2,1fr)}
+  .offer__grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media (max-width:960px){
+  .page-hero__actions .btn{flex:1 1 auto;justify-content:center}
+  .cases__grid{grid-template-columns:1fr 1fr}
+  .brand__grid{grid-template-columns:repeat(4,1fr)}
+  .brand:not(.is-open) .brand__grid > .brand__shot:nth-child(n+14){display:none}
+  .case-main{grid-template-columns:1fr;gap:26px}
+  .quote__grid{grid-template-columns:1fr;gap:32px}
+}
+
+@media (max-width:620px){
+  .dirs__grid{grid-template-columns:1fr}
+  .offer__grid{grid-template-columns:1fr}
+  .faq__item summary{font-size:13px;padding:16px 18px;gap:14px}
+  .faq__body{padding:0 18px 18px;font-size:13px}
+  .cases__grid{grid-template-columns:1fr}
+  .brands{margin-top:34px;padding-top:32px}
+  .brand{padding:18px 16px 20px}
+  .brand__grid{grid-template-columns:repeat(3,1fr);gap:6px}
+  .brand:not(.is-open) .brand__grid > .brand__shot:nth-child(n+10){display:none}
+  .brands__title{font-size:19px}
+  .brands__cta{flex-direction:column;align-items:stretch;padding:20px}
+  .brands__cta-btn{justify-content:center}
+  .case-main{padding:16px;gap:20px}
+  .case-main__row{gap:8px}
+  .case-main__title{font-size:17px}
+  .case-main__body .case__row{flex-direction:column;gap:3px}
+  .case-main__body .case__key{flex:none;padding-right:0}
+  .form__grid{grid-template-columns:1fr}
+  .quote__title{font-size:21px}
+  .page-hero__actions{flex-direction:column;align-items:stretch}
+  .page-hero__actions .btn{width:100%}
+}
+
+/* крупный вариант светлой кнопки — для тёмных блоков */
+.btn--ghost-lg{padding:16px 26px;font-size:12px;font-weight:700;letter-spacing:.09em}
+
+/* ============ 404 ============ */
+.page-hero--404{display:flex;align-items:center;min-height:calc(100vh - 320px)}
+.notfound{padding:80px 24px 90px}
+.notfound .page-hero__title{margin-top:18px}
+.notfound .page-hero__lead{margin-top:22px;max-width:560px}
+.notfound__links{
+  display:flex;flex-wrap:wrap;gap:10px 28px;
+  margin-top:42px;padding-top:26px;border-top:1px solid var(--line);
+  font-size:13.5px;font-weight:600;
+}
+.notfound__links a{color:var(--muted);transition:.2s ease}
+.notfound__links a:hover{color:var(--teal)}
+@media(max-width:760px){
+  .notfound{padding:56px 24px 64px}
+  .page-hero--404{min-height:0}
+}

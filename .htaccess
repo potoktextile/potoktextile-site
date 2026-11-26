@@ -1,0 +1,24 @@
+# Страница 404
+ErrorDocument 404 /404.html
+
+# Кэш статики.
+# ВАЖНО: styles.css, script.js и catalog.js кэшируются у посетителя на неделю,
+# поэтому в html они подключаются с меткой версии: styles.css?v=20260903-1.
+# После правки любого из этих трёх файлов метку НУЖНО поменять во всех
+# html-страницах, иначе посетитель со старым кэшем неделю будет видеть
+# прежнюю версию сайта. Сам html не кэшируется — он и приносит новую метку.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html      "access plus 0 seconds"
+  ExpiresByType image/jpeg     "access plus 1 month"
+  ExpiresByType image/png      "access plus 1 month"
+  ExpiresByType image/webp     "access plus 1 month"
+  ExpiresByType image/svg+xml  "access plus 1 month"
+  ExpiresByType text/css       "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
+
+# Сжатие
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml text/plain application/xml
+</IfModule>
